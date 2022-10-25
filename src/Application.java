@@ -1,7 +1,7 @@
+package src;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-
 public class Application {
     public InputDevice inputDevice;
     public OutputDevice outputDevice;
