@@ -2,6 +2,8 @@ import fruits.Fruit;
 import fruits.Peelable;
 import fruits.SeedRemovable;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class Application {
@@ -65,16 +67,50 @@ public class Application {
     }
 
     public void run(){
+        this.writeRandomNumbers();
 
-        if (arg.equals("words")){
-            this.exampleHistogram();
-        } else if (arg.equals("numbers")){
-            this.randomArraySort();
+
+
+    }
+
+    public void askUserForFile(){
+        while(true)
+        {
+            try {
+                String fileName = this.inputDevice.getLine();
+                FileInputStream file = new FileInputStream(fileName);
+                StringBuilder sb = new StringBuilder();
+                for (int ch; (ch = file.read()) != -1; ) {
+                    sb.append((char) ch);
+                }
+                outputDevice.writeMessage(sb.toString());
+                break;
+            }
+            catch (FileNotFoundException e){
+                outputDevice.writeMessage("Enter another filename: ");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
-        this.testFruitStuff();
+    }
 
-
-
+    public void writeRandomNumbers(){
+        while(true)
+        {
+            try {
+                String fileName = this.inputDevice.getLine();
+                FileOutputStream file = new FileOutputStream(fileName);
+                int[] numbers = inputDevice.getNumbers(10);
+                for(int i = 0; i < numbers.length; i++)
+                    file.write(String.valueOf(numbers[i] + " ").getBytes());
+                break;
+            }
+            catch (FileNotFoundException e){
+                outputDevice.writeMessage("Enter another filename: ");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
